@@ -1,0 +1,21 @@
+{
+  "name": "CameraController",
+  "version": "0.1.2",
+  "main": "main.js",
+  "scripts": {
+    "dev": "electron  /Users/jon/Documents/Dev/CameraController",
+    "clean": "rm -rf ./dist",
+    "clean:osx": "rm -rf ./dist/osx",
+    "build": "npm run clean && npm run build:osx",
+    "build:osx": "npm run clean:osx && electron-packager  /Users/jon/Documents/Dev/CameraController \"Camera Control\" --out=dist/osx --platform=darwin --arch=x64 --version=0.25.3 --icon=assets/osx/icon.icns"
+  },
+  "dependencies": {
+    "electron-packager": "^4.0.2",
+    "electron-prebuilt": "^0.25.2",
+    "electron-builder": "^1.0.0"
+  },
+  "devDependencies": {
+    "electron-builder": "^1.1.0",
+    "electron-packager": "^4.2.0"
+  }
+}
