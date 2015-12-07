@@ -57,8 +57,8 @@ function config_init () {
 	console.log(config);
 
 	// set the initial IP value for the camera ip input
-	$("#cam_ip").val(camera_ip);
-	base_url = "http://" + camera_ip + "/cgi-bin";
+	$("#cam_ip").val(config.ip);
+	base_url = "http://" + config.ip + "/cgi-bin";
 
 	// set the camera's initial configuration for each value in the saved config object
 	config_setting("flip", config.flip);
@@ -551,7 +551,7 @@ function stop_autopan () {
 }
 
 function clear_active_preset () {
-	$('.preset_button').removeClass("active");
+	$('.preset_image').removeClass("active");
 }
 
 $('body').on('click', '.autopan', function(e) {
