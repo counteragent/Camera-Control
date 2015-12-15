@@ -27,7 +27,7 @@ app.on('ready', function() {
 	if (lastWindowState === null) {
 		lastWindowState = {
 			width: 400,
-			height: 656,
+			height: 640,
 			frame: false,
 			resizable: false
 		}

@@ -1,6 +1,6 @@
 {
 	"osx" : {
-		"title": "KH Camera Control",
+		"title": "Camera Control",
 		"icon": "assets/osx/icon.icns",
 		"icon-size": 80,
 		"contents": [
@@ -9,7 +9,7 @@
 		]
 	},
 	"win" : {
-		"title" : "KH Camera Control",
+		"title" : "Camera Control",
 		"icon" : "assets/win/icon.ico"
 	}
 }
