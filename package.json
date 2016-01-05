@@ -10,17 +10,16 @@
 		"clean:win": "rm -rf ./dist/win",
 
 		"build": "npm run clean && npm run build:osx && npm run build:win",
-		"build:osx": "npm run clean:osx && electron-packager . \"Camera Control\" --out=dist/osx --platform=darwin --arch=x64 --version=0.35.4 --icon=assets/osx/icon.icns",
-		"build:win": "npm run clean:win && electron-packager . \"Camera Control\" --out=dist/win --platform=win32 --arch=ia32 --version=0.35.4 --icon=assets/win/icon.ico",
+		"build:osx": "npm run clean:osx && electron-packager . \"Camera Control\" --out=dist/osx --platform=darwin --arch=x64 --version=0.36.0 --icon=assets/osx/icon.icns",
+		"build:win": "npm run clean:win && electron-packager . \"Camera Control\" --out=dist/win --platform=win32 --arch=ia32 --version=0.36.0 --icon=assets/win/icon.ico",
 
 		"pack": "npm run pack:osx && npm run pack:win",
-		"pack:osx": "npm run build:osx && electron-builder \"dist/osx/Camera Control.app\" --platform=osx --out=\"dist/osx\" --config=packager.json",
-		"pack:win": "npm run build:win && electron-builder \"dist/win/Camera Control-win32\" --platform=win --out=\"dist/win\" --config=packager.json"
+		"pack:osx": "npm run build:osx && electron-builder \"dist/osx/Camera Control.app\" --platform=osx --out=dist/osx --config=packager.json",
+		"pack:win": "npm run build:win && electron-builder \"dist/win/Camera Control-win32-ia32\" --platform=win --out=dist/win --config=packager.json"
 	},
-
 	"dependencies": {
-		"electron-prebuilt": "^0.35.4",
 		"electron-builder": "^2.4.0",
-		"electron-packager": "^5.1.1"
+		"electron-packager": "^5.1.1",
+		"electron-prebuilt": "^0.36.0"
 	}
 }
