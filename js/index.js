@@ -681,58 +681,106 @@ $('body').on('mouseup mouseout', '.toggle-down', function(e) {
 /* ------------------------------------ Keyboard Events
  */
 
-// UP
-Mousetrap.bind('up', function(e) {
-	stop_autopan();
-	cam_pantilt(1, 'up');
-	$('.pantilt-up').addClass('active');
-	return false;
-}, 'keydown');
+ function ptzStart (movement) {
+  return function (e) {
+    // console.log(movement + ' start');
+    stop_autopan();
+    cam_pantilt(1, movement);
+    $('.pantilt-' + movement).addClass('active');
+    return false;
+  }
+ }
 
-Mousetrap.bind('up', function(e) {
-	cam_pantilt(1, 'ptzstop');
-	$('.pantilt-up').removeClass('active');
-	return false;
-}, 'keyup');
+ function ptzStop (movement) {
+  return function (e) {
+   //  console.log(movement + ' end');
+    cam_pantilt(1, 'ptzstop');
+    $('.pantilt-' + movement).removeClass('active');
+    return false;
+  }
+ }
 
-// DOWN
-Mousetrap.bind('down', function(e) {
-	stop_autopan();
-	cam_pantilt(1, 'down');
-	$('.pantilt-down').addClass('active');
-	return false;
-}, 'keydown');
+ function ptzZoomStart (movement) {
+   return function (e) {
+     // console.log(movement);
+     e.preventDefault();
+     stop_autopan();
+     cam_zoom(1, movement);
+     clear_active_preset();
+     return false;
+   }
+ }
 
-Mousetrap.bind('down', function(e) {
-	cam_pantilt(1, 'ptzstop');
-	$('.pantilt-down').removeClass('active');
-	return false;
-}, 'keyup');
+ function ptzZoomStop () {
+   return function (e) {
+       e.preventDefault();
+       cam_zoom(1, 'zoomstop');
+       return false;
+   }
+ }
 
-// LEFT
-Mousetrap.bind('left', function(e) {
-	stop_autopan();
-	cam_pantilt(1, 'left');
-	$('.pantilt-left').addClass('active');
-	return false;
-}, 'keydown');
+ function ptzPreset(num) {
+   return function (e) {
+     // console.log("running preset: " + num);
+     e.preventDefault();
+     stop_autopan();
+     cam_preset(1, num, 'poscall');
+     clear_active_preset();
+     $(this).addClass("active");
+     return false;
+   }
+ }
 
-Mousetrap.bind('left', function(e) {
-	cam_pantilt(1, 'ptzstop');
-	$('.pantilt-left').removeClass('active');
-	return false;
-}, 'keyup');
+ // UP
+ Mousetrap.bind('up', ptzStart('up'), 'keydown');
+ Mousetrap.bind('up', ptzStop('up'), 'keyup');
 
-// RIGHT
-Mousetrap.bind('right', function(e) {
-	stop_autopan();
-	cam_pantilt(1, 'right');
-	$('.pantilt-right').addClass('active');
-	return false;
-}, 'keydown');
+ // DOWN
+ Mousetrap.bind('down', ptzStart('down'), 'keydown');
+ Mousetrap.bind('down', ptzStop('down'), 'keyup');
 
-Mousetrap.bind('right', function(e) {
-	cam_pantilt(1, 'ptzstop');
-	$('.pantilt-right').removeClass('active');
-	return false;
-}, 'keyup');
+ // LEFT
+ Mousetrap.bind('left', ptzStart('left'), 'keydown');
+ Mousetrap.bind('left', ptzStop('left'), 'keyup');
+
+ // RIGHT
+ Mousetrap.bind('right', ptzStart('right'), 'keydown');
+ Mousetrap.bind('right', ptzStop('right'), 'keyup');
+
+ // ZOOM IN
+ Mousetrap.bind('+', ptzZoomStart('zoomin'), 'keydown');
+ Mousetrap.bind('+', ptzZoomStop(), 'keyup');
+
+ // ZOOM OUT
+ Mousetrap.bind('-', ptzZoomStart('zoomout'), 'keydown');
+ Mousetrap.bind('-', ptzZoomStop(), 'keyup');
+
+ // Presets 1-9
+ for (i=1; i < 10; i++) {
+   Mousetrap.bind(i.toString(), ptzPreset(i.toString()), 'keydown');
+ }
+
+ // Map left side of keyboard
+ // UP = w
+ Mousetrap.bind('w', ptzStart('up'), 'keydown');
+ Mousetrap.bind('w', ptzStop('up'), 'keyup');
+
+ // DOWN = s
+ Mousetrap.bind('s', ptzStart('down'), 'keydown');
+ Mousetrap.bind('s', ptzStop('down'), 'keyup');
+
+ // LEFT = a
+ Mousetrap.bind('a', ptzStart('left'), 'keydown');
+ Mousetrap.bind('a', ptzStop('left'), 'keyup');
+
+ // RIGHT = d
+ Mousetrap.bind('d', ptzStart('right'), 'keydown');
+ Mousetrap.bind('d', ptzStop('right'), 'keyup');
+
+ // ZOOM IN = q
+ Mousetrap.bind('q', ptzZoomStart('zoomin'), 'keydown');
+ Mousetrap.bind('q', ptzZoomStop(), 'keyup');
+
+ // ZOOM OUT = e
+ Mousetrap.bind('e', ptzZoomStart('zoomout'), 'keydown');
+ Mousetrap.bind('e', ptzZoomStop(), 'keyup');
