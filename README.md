@@ -1,4 +1,4 @@
-# Camera-Control
+# Camera Control
 PTZOptics Camera Control Software (Electron App)
 
 This project is made for the PTZOptics line of IP Cameras.

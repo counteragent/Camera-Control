@@ -1,25 +1,56 @@
 {
-	"name": "CameraControl",
-	"version": "0.1.5",
+	"name": "camera-control",
+	"productName": "Camera Control",
+	"description": "Camera Control App for PTZOptics Network IP Cameras",
+	"author": "Jonathan Brimer",
+	"version": "0.1.6",
 	"main": "main.js",
+
 	"scripts": {
-		"dev": "electron .",
+		"start": "electron .",
 
 		"clean": "rm -rf ./dist",
 		"clean:osx": "rm -rf ./dist/osx",
 		"clean:win": "rm -rf ./dist/win",
 
-		"build": "npm run clean && npm run build:osx && npm run build:win",
-		"build:osx": "npm run clean:osx && electron-packager . \"Camera Control\" --out=dist/osx --platform=darwin --arch=x64 --version=0.36.0 --icon=assets/osx/icon.icns",
-		"build:win": "npm run clean:win && electron-packager . \"Camera Control\" --out=dist/win --platform=win32 --arch=ia32 --version=0.36.0 --icon=assets/win/icon.ico",
+		"pack": "npm run clean && npm run pack:osx && npm run pack:win32 && npm run pack:win64",
+		"pack:osx": "npm run clean:osx && electron-packager . \"Camera Control\" --out=dist/osx --platform=darwin --arch=x64 --electron-version=1.6.8 --icon=assets/osx/icon.icns",
+		"pack:win32": "npm run clean:win && electron-packager . \"Camera Control\" --out=dist/win --platform=win32 --arch=ia32 --electron-version=1.6.8 --icon=assets/win/icon.ico",
+		"pack:win64": "npm run clean:win && electron-packager . --overwrite --asar=true --prune=true --out=dist/win --platform=win32 --arch=x64 --electron-version=1.6.8 --icon=assets/win/icon.ico --version-string.CompanyName=\"Jonathan Brimer\" --version-string.FileDescription=\"Jonathan Brimer\" --version-string.ProductName=\"Camera Control\"",
 
-		"pack": "npm run pack:osx && npm run pack:win",
-		"pack:osx": "npm run build:osx && electron-builder \"dist/osx/Camera Control.app\" --platform=osx --out=dist/osx --config=packager.json",
-		"pack:win": "npm run build:win && electron-builder \"dist/win/Camera Control-win32-ia32\" --platform=win --out=dist/win --config=packager.json"
+		"dist": "build -ow --x64 && build -w --ia32",
+
+		"prerelease:win32": "rm -rf release/win32 && mkdirp release/win32",
+		"prerelease:win64": "rm -rf release/win64 && mkdirp release/win64",
+
+		"release:win32": "cp -v dist/win-ia32/{RELEASES,*.nupkg,*.exe} release/win32",
+		"release:win64": "cp -v dist/win/{RELEASES,*.nupkg,*.exe} release/win64"
 	},
-	"dependencies": {
-		"electron-builder": "^2.4.0",
-		"electron-packager": "^5.1.1",
-		"electron-prebuilt": "^0.36.0"
+
+	"build": {
+		"appId": "propernerd.camera.control",
+		"productName": "Camera Control",
+		"dmg": {
+			"contents": [{
+					"x": 130,
+					"y": 220
+				},
+				{
+					"x": 410,
+					"y": 220,
+					"type": "link",
+					"path": "/Applications"
+			}],
+			"icon": "build/icon.icns"
+		},
+		"win": {
+			"icon": "build/icon.ico"
+		}
+	},
+
+	"devDependencies": {
+		"electron": "^1.6.8",
+		"electron-builder": "^18.0.1",
+		"electron-packager": "^8.7.0"
 	}
 }

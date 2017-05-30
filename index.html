@@ -11,13 +11,13 @@
 	<link rel="stylesheet" href="./css/style.css"></head>
 
 <body>
-
 	<div class="main">
 		<div class="row">
 			<div class="">
 				<header class="primary">
 					<h1>Camera Control</h1>
-				</header>				<nav class="primary">
+				</header>
+				<nav class="primary">
 					<ul>
 						<li>
 							<a class="" href="#" data-toggle="modal" data-target="#set_presets">Assign Presets</a>
@@ -99,11 +99,6 @@
 		</div>
 	</div>
 
-
-
-
-
-
 	<!-- Modal -->
 	<div class="modal" id="set_presets" tabindex="-1" role="dialog" aria-labelledby="set_presets_label">
 		<div class="modal-dialog" role="document">
@@ -170,7 +165,7 @@
 
 					<div class="row">
 						<div class="col-xs-12">
-							<input class="btn btn-primary btn-block assign_preset" type="button" value="Auto Pan Left Start Position">
+							<input class="btn btn-primary btn-block assign_preset" type="button" value="Auto Pan Left Start Position (Preset 11)">
 						</div>
 					</div>
 
@@ -357,9 +352,18 @@
 
 </body>
 </html>
+
+<!-- Insert this line above script imports  -->
+<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+
+<script src="./js/jquery-2.1.4.min.js" type="text/javascript"></script>
+<script src="./js/bootstrap.min.js" type="text/javascript"></script>
+<script src="./js/mousetrap.min.js" type="text/javascript"></script>
+<script src="./js/index.js" type="text/javascript"></script>
 <script>
-var remote = require('remote');
-var Menu = remote.require('menu');
+const {remote} = require('electron');
+const {Menu, MenuItem} = remote;
+
 var template = [
   {
     label: 'Camera Control',
@@ -367,6 +371,25 @@ var template = [
       {
         label: 'About Camera Control',
         selector: 'orderFrontStandardAboutPanel:'
+      },
+      {
+        type: 'separator'
+      },
+      {
+        label: 'Preferences',
+        accelerator: 'Command+,',
+        click: function() {
+        	console.log('Preferences Clicked from Menu');
+        	$('#cam_adjust_control_settings').modal('toggle');
+	    }
+      },
+      {
+        label: 'Presets',
+        accelerator: 'Command+.',
+        click: function() {
+        	console.log('Presets Clicked from Menu');
+        	$('#set_presets').modal('toggle');
+	    }
       },
       {
         type: 'separator'
@@ -429,15 +452,9 @@ var template = [
     submenu: []
   }
 ];
-
 menu = Menu.buildFromTemplate(template);
-
 Menu.setApplicationMenu(menu);
-
-// only used for electron packaging
-window.$ = window.jQuery = require('./js/jquery-2.1.4.min.js');
 </script>
-<script src="./js/jquery-2.1.4.min.js" type="text/javascript"></script>
-<script src="./js/bootstrap.min.js" type="text/javascript"></script>
-<script src="./js/mousetrap.min.js" type="text/javascript"></script>
-<script src="./js/index.js" type="text/javascript"></script>
+
+<!-- Insert this line after script imports -->
+<script>if (window.module) module = window.module;</script>
