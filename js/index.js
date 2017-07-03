@@ -681,7 +681,7 @@ $('body').on('mouseup mouseout mouseleave', '.toggle-down', function(e) {
 /* ------------------------------------ Keyboard Events
  */
 
-// UP
+// HOME
 Mousetrap.bind('home', function(e) {
 	stop_autopan();
 	cam_pantilt(1, 'home');
@@ -689,6 +689,13 @@ Mousetrap.bind('home', function(e) {
 	clear_active_preset();
 	return false;
 }, 'keydown');
+
+Mousetrap.bind('home', function(e) {
+	cam_pantilt(1, 'stop');
+	$('.pantilt-home').removeClass('active');
+	clear_active_preset();
+	return false;
+}, 'keyup');
 
 // UP
 Mousetrap.bind('up', function(e) {
@@ -779,7 +786,6 @@ Mousetrap.bind('z', function(e) {
 	cam_zoom(1, 'zoomstop');
 	return false;
 }, 'keyup');
-
 
 const {remote} = require('electron');
 const {app} = remote;
