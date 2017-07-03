@@ -3,7 +3,7 @@
 	"productName": "Camera Control",
 	"description": "Camera Control App for PTZOptics Network IP Cameras",
 	"author": "Jonathan Brimer",
-	"version": "0.1.6",
+	"version": "0.1.7",
 	"main": "main.js",
 
 	"scripts": {
