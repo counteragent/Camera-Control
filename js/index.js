@@ -432,9 +432,9 @@ function cam_pantilt (camera, action) {
 			var loc = base_url + "/ptzctrl.cgi?ptzcmd&home&" + config.panspeed + "&" + config.tiltspeed + "";
 			break;
 
-		case 'ptzstop':
+		case 'stop':
 
-			var loc = base_url + "/ptzctrl.cgi?ptzcmd&ptzstop&" + config.panspeed + "&" + config.tiltspeed + "";
+			var loc = base_url + "/ptzctrl.cgi?ptzcmd&ptzstop";
 			break;
 	}
 
@@ -546,18 +546,18 @@ function stop_autopan () {
 		clearInterval(panInterval);
 	}
 	autopanning = false;
-	cam_pantilt(1, "ptzstop");
+	cam_pantilt(1, "stop");
 	$('.autopan').removeClass('active');
 }
 
 function clear_active_preset () {
-	$('.preset_image').removeClass("active");
+	$('.preset_button').removeClass("active");
 }
 
 $('body').on('click', '.autopan', function(e) {
 	e.preventDefault();
 	clear_active_preset();
-	cam_pantilt(1, "ptzstop");
+	cam_pantilt(1, "stop");
 
 	if (autopanning == false) {
 
@@ -624,9 +624,9 @@ $('body').on('mousedown', '.adjust_pantilt', function(e) {
 	clear_active_preset();
 	return false;
 });
-$('body').on('mouseup mouseout', '.adjust_pantilt', function(e) {
+$('body').on('mouseup mouseout mouseleave', '.adjust_pantilt', function(e) {
 	e.preventDefault();
-	cam_pantilt(1, 'ptzstop');
+	cam_pantilt(1, 'stop');
 	return false;
 });
 
@@ -638,7 +638,7 @@ $('body').on('mousedown', '.adjust_zoom', function(e) {
 	clear_active_preset();
 	return false;
 });
-$('body').on('mouseup mouseout', '.adjust_zoom', function(e) {
+$('body').on('mouseup mouseout mouseleave', '.adjust_zoom', function(e) {
 	e.preventDefault();
 	cam_zoom(1, 'zoomstop');
 	return false;
@@ -652,7 +652,7 @@ $('body').on('mousedown', '.adjust_focus', function(e) {
 	clear_active_preset();
 	return false;
 });
-$('body').on('mouseup mouseout', '.adjust_focus', function(e) {
+$('body').on('mouseup mouseout mouseleave', '.adjust_focus', function(e) {
 	e.preventDefault();
 	cam_focus(1, 'focusstop');
 	return false;
@@ -663,7 +663,7 @@ $('body').on('mousedown', '.toggle-up', function(e) {
 	e.preventDefault();
 	$(this).parents('.rocker').addClass('rocker-up');
 });
-$('body').on('mouseup mouseout', '.toggle-up', function(e) {
+$('body').on('mouseup mouseout mouseleave', '.toggle-up', function(e) {
 	e.preventDefault();
 	$(this).parents('.rocker').removeClass('rocker-up');
 });
@@ -672,7 +672,7 @@ $('body').on('mousedown', '.toggle-down', function(e) {
 	e.preventDefault();
 	$(this).parents('.rocker').addClass('rocker-down');
 });
-$('body').on('mouseup mouseout', '.toggle-down', function(e) {
+$('body').on('mouseup mouseout mouseleave', '.toggle-down', function(e) {
 	e.preventDefault();
 	$(this).parents('.rocker').removeClass('rocker-down');
 });
@@ -682,16 +682,27 @@ $('body').on('mouseup mouseout', '.toggle-down', function(e) {
  */
 
 // UP
+Mousetrap.bind('home', function(e) {
+	stop_autopan();
+	cam_pantilt(1, 'home');
+	$('.pantilt-home').addClass('active');
+	clear_active_preset();
+	return false;
+}, 'keydown');
+
+// UP
 Mousetrap.bind('up', function(e) {
 	stop_autopan();
 	cam_pantilt(1, 'up');
 	$('.pantilt-up').addClass('active');
+	clear_active_preset();
 	return false;
 }, 'keydown');
 
 Mousetrap.bind('up', function(e) {
-	cam_pantilt(1, 'ptzstop');
+	cam_pantilt(1, 'stop');
 	$('.pantilt-up').removeClass('active');
+	clear_active_preset();
 	return false;
 }, 'keyup');
 
@@ -700,12 +711,14 @@ Mousetrap.bind('down', function(e) {
 	stop_autopan();
 	cam_pantilt(1, 'down');
 	$('.pantilt-down').addClass('active');
+	clear_active_preset();
 	return false;
 }, 'keydown');
 
 Mousetrap.bind('down', function(e) {
-	cam_pantilt(1, 'ptzstop');
+	cam_pantilt(1, 'stop');
 	$('.pantilt-down').removeClass('active');
+	clear_active_preset();
 	return false;
 }, 'keyup');
 
@@ -714,12 +727,14 @@ Mousetrap.bind('left', function(e) {
 	stop_autopan();
 	cam_pantilt(1, 'left');
 	$('.pantilt-left').addClass('active');
+	clear_active_preset();
 	return false;
 }, 'keydown');
 
 Mousetrap.bind('left', function(e) {
-	cam_pantilt(1, 'ptzstop');
+	cam_pantilt(1, 'stop');
 	$('.pantilt-left').removeClass('active');
+	clear_active_preset();
 	return false;
 }, 'keyup');
 
@@ -728,11 +743,48 @@ Mousetrap.bind('right', function(e) {
 	stop_autopan();
 	cam_pantilt(1, 'right');
 	$('.pantilt-right').addClass('active');
+	clear_active_preset();
 	return false;
 }, 'keydown');
 
 Mousetrap.bind('right', function(e) {
-	cam_pantilt(1, 'ptzstop');
+	cam_pantilt(1, 'stop');
 	$('.pantilt-right').removeClass('active');
+	clear_active_preset();
 	return false;
 }, 'keyup');
+
+// ZOOM IN
+Mousetrap.bind('a', function(e) {
+	stop_autopan();
+	cam_zoom(1, 'zoomin');
+	clear_active_preset();
+	return false;
+}, 'keydown');
+
+Mousetrap.bind('a', function(e) {
+	cam_zoom(1, 'zoomstop');
+	return false;
+}, 'keyup');
+
+// ZOOM OUT
+Mousetrap.bind('z', function(e) {
+	stop_autopan();
+	cam_zoom(1, 'zoomout');
+	clear_active_preset();
+	return false;
+}, 'keydown');
+
+Mousetrap.bind('z', function(e) {
+	cam_zoom(1, 'zoomstop');
+	return false;
+}, 'keyup');
+
+
+const {remote} = require('electron');
+const {app} = remote;
+
+app.on('before-quit', () => {
+	// reset the camera to home position before closing the application
+	cam_pantilt(1, 'home');
+})
