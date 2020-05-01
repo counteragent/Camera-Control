@@ -1,9 +1,11 @@
 
 var camera_ip = "192.168.0.190";
+var camera_name = "PTZ Optics";
 var base_url = "http://" + camera_ip + "/cgi-bin";
 // config defaults
 var defaults = {
     ip: camera_ip,
+    name: camera_name,
     flip: 1,
     mirror: 1,
     invertcontrols: 1,
@@ -18,6 +20,7 @@ var defaults = {
 };
 var config = defaults;
 config.ip = camera_ip;
+config.name = camera_name;
 
 function get_config () {
 	var result = localStorage.getItem('configStorage');
@@ -59,6 +62,9 @@ function config_init () {
 	// set the initial IP value for the camera ip input
 	$("#cam_ip").val(config.ip);
 	base_url = "http://" + config.ip + "/cgi-bin";
+
+  // set the inital name for the camera.
+  $("#cam_name").val(config.name)
 
 	// set the camera's initial configuration for each value in the saved config object
 	config_setting("flip", config.flip);
@@ -166,6 +172,7 @@ function update_labels () {
 	}
 
 	config.ip = $('#cam_ip').val();
+  config.name = $('#cam_name').val();
 }
 
 function reload_cam () {
