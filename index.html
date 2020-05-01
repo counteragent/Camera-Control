@@ -15,7 +15,7 @@
 		<div class="row">
 			<div class="">
 				<header class="primary">
-					<h1>Camera Control</h1>
+					<h1><p id="camName"></p></h1>
 				</header>
 				<nav class="primary">
 					<ul>
@@ -326,7 +326,18 @@
 							<input class="form-control" type="text" id="cam_ip" value=""></div>
 						<div class="col-xs-6">
 							<label>&nbsp;</label>
-							<button class="btn btn-default form-control reload_cam">Reload Camera</button>
+							<button class="btn btn-primary form-control reload_cam">Reload Camera</button>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-xs-6">
+							<label for="cam_name">Camera Name</label>
+							<input class="form-control" type="text" id="cam_name" value="">
+						</div>
+						<div class="col-xs-6">
+							<label>&nbsp;</label>
+							<button class="btn btn-primary form-control reload_name">Change Name</button>
 						</div>
 					</div>
 
