@@ -43,7 +43,7 @@ function run_action (action_url) {
 		type: 'GET',
 	})
 	.done(function() {
-		// console.log("success");
+		document.getElementById("camName").innerHTML = setCamName();
 	})
 	.fail(function(jqXHR, responseText, errorThrown) {
 		// console.log("error");
@@ -189,6 +189,14 @@ function reload_cam () {
 
 		alert("IP address entered is invalid! Re-enter camera IP address.");
 	}
+}
+
+function reload_name () {
+  config.name = $('#cam_name').val();
+  config.name = config.name;
+  save_config();
+  document.getElementById("camName").innerHTML = setCamName();
+  alert("Name Saved.");
 }
 
 function adjust_setting (action) {
@@ -561,6 +569,12 @@ function clear_active_preset () {
 	$('.preset_button').removeClass("active");
 }
 
+function setCamName() {
+  return config.name;
+}
+
+document.getElementById("camName").innerHTML = setCamName();
+
 $('body').on('click', '.autopan', function(e) {
 	e.preventDefault();
 	clear_active_preset();
@@ -621,6 +635,12 @@ $('body').on('click', '.reload_cam', function(e) {
 	e.preventDefault();
 	reload_cam();
 	return false;
+});
+
+$('body').on('click', '.reload_name', function(e) {
+  e.preventDefault();
+  reload_name();
+  return false;
 });
 
 $('body').on('mousedown', '.adjust_pantilt', function(e) {
